@@ -1,0 +1,12 @@
+source $HOME/.config/nvim/config.d/plug.vim
+source $HOME/.config/nvim/config.d/editor_settings.vim
+source $HOME/.config/nvim/config.d/keymap.vim
+source $HOME/.config/nvim/config.d/nvim-tree.vim
+source $HOME/.config/nvim/config.d/bufferline.vim
+source $HOME/.config/nvim/config.d/completion.vim
+source $HOME/.config/nvim/config.d/lsp.vim
+source $HOME/.config/nvim/config.d/functions.vim
+source $HOME/.config/nvim/config.d/treesitter.vim
+source $HOME/.config/nvim/config.d/auto-session.vim
+source $HOME/.config/nvim/config.d/telescope.vim
+"source $HOME/.config/nvim/config.d/fzf.vim
