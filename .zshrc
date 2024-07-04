@@ -9,6 +9,7 @@ plugins=(
     #zsh-autosuggestions
 )
 source $ZSH/oh-my-zsh.sh
+source ~/.profile_env
 
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*:*:docker:*' option-stacking yes
@@ -16,9 +17,6 @@ zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 PROMPT="$PROMPT› "
 export FZF_DEFAULT_COMMAND='fdfind --type f --exclude="*__pycache__*" --exclude="*.pyc"'
-export PATH="$HOME/.bin:$HOME/.local/bin:$PATH"
-#export PATH="$PATH:/opt/nvim-linux64/bin"
-export EDITOR=/usr/bin/nvim
 
 function tmux_rename() {
     NAME=$1
@@ -29,12 +27,7 @@ function tmux_rename() {
 compdef _work work
 _work() {
     #compadd $(echo "
-        #collector.agent
-        #collector.migration
-        #collector.agent.proxy
-        #collector.agent.avatar
-        #spp_index_backend
-        #spp_index_adapter
+        #example
     #")
 
     compadd $(find /home/roman/.code -maxdepth 1 -mindepth 1 -type d -printf "%f\n")
