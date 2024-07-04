@@ -1,4 +1,5 @@
 #!/bin/bash
+source ~/.profile_env
 
 #OTHER=$(tmux list-sessions -F '#{session_attached}: #{session_last_attached}: #S' | sort -r | grep -v '^1' | sed 's/.*: //g')
 

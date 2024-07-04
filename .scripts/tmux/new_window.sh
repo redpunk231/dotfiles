@@ -1,4 +1,5 @@
 #!/bin/bash
+source ~/.profile_env
 
 DIR="~/"
 SESSION_ID=$(tmux display-message -p '#{session_id}')

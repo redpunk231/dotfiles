@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ~/.profile_env
 source $(dirname -- "${BASH_SOURCE[0]}")/common.sh
 
 NAME=$(name_default)

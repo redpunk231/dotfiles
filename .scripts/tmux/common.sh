@@ -1,7 +1,8 @@
 #!/bin/bash
+source ~/.profile_env
 
 function name() {
-    NAME=$(echo '' | fzf-tmux -p -p 15%,7% --no-info --pointer=' ' --print-query)
+    NAME=$(echo '' | $FZF_PATH/fzf-tmux -p -p 15%,7% --no-info --pointer=' ' --print-query)
 
     if [ $? -eq 130 ]; then
         return 1

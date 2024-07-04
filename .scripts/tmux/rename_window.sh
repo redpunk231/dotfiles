@@ -1,8 +1,9 @@
 #!/bin/bash
+source ~/.profile_env
 
 CUR_NAME="$(tmux display-message -p '#W')"
 #NAME=$(echo '' | fzf-tmux -p -p 15%,7% --no-info --pointer=' ' --print-query -q "$CUR_NAME")
-NAME=$(echo '' | fzf-tmux -p -p 15%,6% --info=hidden --no-separator --pointer=' ' --print-query -q "$CUR_NAME")
+NAME=$(echo '' | $FZF_PATH/fzf-tmux -p 15%,6% --info=hidden --no-separator --pointer=' ' --print-query -q "$CUR_NAME")
 [ $? -eq 130 ] && exit 0
 [ "$NAME" == "" ] && exit 0
 [ "$NAME" == "$CUR_NAME" ] && exit 0

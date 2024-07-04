@@ -58,6 +58,7 @@ Plug 'rmagatti/auto-session'
 
 " Telescope
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Color schemas
 Plug 'morhetz/gruvbox'

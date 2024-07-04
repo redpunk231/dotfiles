@@ -30,11 +30,12 @@ endfunction
 
 
 function TelescopeFiles()
-    if isdirectory(".git")
-        :lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({previewer=false, prompt_title=false, prompt_prefix='Files> '}))
-    else
-        :lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer=false, prompt_title=false, prompt_prefix='Files> '}))
-    endif
+    :lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer=false, prompt_title=false, prompt_prefix='Files> '}))
+    "if isdirectory(".git")
+        ":lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({previewer=false, prompt_title=false, prompt_prefix='Files> '}))
+    "else
+        ":lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer=false, prompt_title=false, prompt_prefix='Files> '}))
+    "endif
 endfunction
 
 function TelescopeGitBranches()
