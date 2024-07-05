@@ -33,9 +33,9 @@ nmap <silent> <F8>       :bd<CR>
 vmap <silent> <F8> <esc> :bd<CR>
 imap <silent> <F8> <esc> :bd<CR>
 
-nmap <silent> <F9>       :call GetTerminal()<CR>
-vmap <silent> <F9> <esc> :call GetTerminal()<CR>
-imap <silent> <F9> <esc> :call GetTerminal()<CR>
+"nmap <silent> <F9>       :call GetTerminal()<CR>
+"vmap <silent> <F9> <esc> :call GetTerminal()<CR>
+"imap <silent> <F9> <esc> :call GetTerminal()<CR>
 
 nmap <silent> <F10>         :Telescope buffers sort_lastused=true<Cr>
 vmap <silent> <F10> <esc>   :Telescope buffers sort_lastused=true<Cr>
