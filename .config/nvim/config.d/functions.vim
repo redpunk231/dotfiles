@@ -29,6 +29,11 @@ function! RsyncWin()
 endfunction
 
 
+function TelescopeBuffersMin()
+    :lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({sort_lastused=true, previewer=false, prompt_title=false, prompt_prefix='Buffers> '}))
+endfunction
+
+
 function TelescopeFiles()
     :lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({previewer=false, prompt_title=false, prompt_prefix='Files> '}))
     "if isdirectory(".git")
@@ -40,6 +45,6 @@ endfunction
 
 function TelescopeGitBranches()
     if isdirectory(".git")
-        :lua require'telescope.builtin'.git_branches(require('telescope.themes').get_dropdown({previewer=false, prompt_title=false, prompt_prefix='Branches> ', layout_config = {width = 70}}))
+        :lua require'telescope.builtin'.git_branches(require('telescope.themes').get_dropdown({show_remote_tracking_branches=false, previewer=false, prompt_title=false, prompt_prefix='Branches> ', layout_config = {width = 70}}))
     endif
 endfunction

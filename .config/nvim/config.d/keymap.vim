@@ -37,9 +37,9 @@ imap <silent> <F8> <esc> :bd<CR>
 "vmap <silent> <F9> <esc> :call GetTerminal()<CR>
 "imap <silent> <F9> <esc> :call GetTerminal()<CR>
 
-nmap <silent> <F10>         :Telescope buffers sort_lastused=true<Cr>
-vmap <silent> <F10> <esc>   :Telescope buffers sort_lastused=true<Cr>
-imap <silent> <F10> <esc>   :Telescope buffers sort_lastused=true<Cr>
+nmap <silent> <F10>         :call TelescopeBuffersMin()<Cr>
+vmap <silent> <F10> <esc>   :call TelescopeBuffersMin()<Cr>
+imap <silent> <F10> <esc>   :call TelescopeBuffersMin()<Cr>
 
 nmap <silent> <F11>      :BufferLineCyclePrev<CR>
 vmap <silent> <F11> <esc>:BufferLineCyclePrev<CR>
