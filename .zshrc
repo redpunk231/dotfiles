@@ -16,7 +16,7 @@ zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 PROMPT="$PROMPT› "
-export FZF_DEFAULT_COMMAND='fdfind --type f --exclude="*__pycache__*" --exclude="*.pyc"'
+# export FZF_DEFAULT_COMMAND='fdfind --type f --exclude="*__pycache__*" --exclude="*.pyc"'
 
 function tmux_rename() {
     NAME=$1
