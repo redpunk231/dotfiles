@@ -1,11 +1,14 @@
 #!/bin/bash
 source ~/.profile_env
-source $(dirname -- "${BASH_SOURCE[0]}")/common.sh
 
-NAME=$(name_default)
-[ $? -ne 0 ] && exit 0
+NAME=$(echo '' | $FZF_PATH/fzf-tmux -p 15%,6% --info=hidden --no-separator --pointer=' ' --print-query | sed 's/\ /_/g')
+[ $? -eq 130 ] && exit 0
 
-TMUX='' tmux new-session -d -s $NAME
+if [ "$NAME" == "" ]; then
+    NAME=$(uuidgen)
+fi
+
+TMUX='' tmux new-session -d -s $NAME -c "~/"
 if [[ -z "$TMUX" ]]; then
     tmux attach -t $NAME
 else
