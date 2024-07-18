@@ -6,6 +6,7 @@ require('auto-session').setup({
         '/home/roman/.code/service-oem-network-scanner',
         '/home/roman/.code/oem-x86-automated-testing',
         '/home/roman/.code/oem-x86-api',
+        '/home/roman/.code/jboe-at',
     },
     auto_session_use_git_branch = false
 
