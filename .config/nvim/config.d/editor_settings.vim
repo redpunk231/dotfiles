@@ -54,7 +54,9 @@ let g:sonokai_better_performance = 1
 let g:everforest_background = 'medium'
 let g:everforest_better_performance = 1
 let g:everforest_disable_italic_comment = 1
-"let g:everforest_transparent_background = 1
+"let g:everforest_diagnostic_text_highlight = 1
+"let g:everforest_diagnostic_virtual_text = 'colored'
+
 colorscheme everforest
 
 let g:bufferline_show_bufnr = 0
