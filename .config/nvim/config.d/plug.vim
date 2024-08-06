@@ -7,15 +7,14 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
-Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'L3MON4D3/LuaSnip'
 Plug 'ray-x/lsp_signature.nvim'
 
 " FileManager
 Plug 'kyazdani42/nvim-tree.lua'
 
 " Snippets
-Plug 'dcampos/nvim-snippy'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
 Plug 'honza/vim-snippets'
 
 " Commenter
