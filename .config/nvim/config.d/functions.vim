@@ -19,7 +19,7 @@ endfunction
 
 
 function TelescopeBuffersMin()
-    :lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({sort_lastused=true, previewer=false, prompt_title=false, prompt_prefix='Buffers> '}))
+    :lua require'telescope.builtin'.buffers(require('telescope.themes').get_dropdown({sort_mru=true, ignore_current_buffer=true, previewer=false, prompt_title=false, prompt_prefix='Buffers> '}))
 endfunction
 
 

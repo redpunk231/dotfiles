@@ -87,7 +87,7 @@ function nvim_config() {
     SAVE_PATH=$(pwd)
     cd ~/.config/nvim
     tmux_rename "nvim conf"
-    nvim init.vim
+    nvim
     cd $SAVE_PATH
 }
 

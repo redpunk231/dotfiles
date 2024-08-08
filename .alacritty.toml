@@ -1,53 +1,9 @@
 live_config_reload = true
 
-#############################
-# GRUVBOX
-#
-#[colors.bright]
-#black = "#928374"
-#blue = "#83A598"
-#cyan = "#8EC07C"
-#green = "#B8BB26"
-#magenta = "#D3869B"
-#red = "#FB4934"
-#white = "#EBDBB2"
-#yellow = "#FABD2F"
-
-#[colors.normal]
-#black = "#32302F"
-#blue = "#458588"
-#cyan = "#689D6A"
-#green = "#98971A"
-#magenta = "#B16286"
-#red = "#CC241D"
-#white = "#A89984"
-#yellow = "#D79921"
-
-#[colors.primary]
-#background = "#32302F"
-#foreground = "#ECE3BC"
-#############################
-
-
-#############################
-# EVERFOREST medium
-#
-[colors.primary]
-background = "#2d353b"
-foreground = "#d3c6aa"
-
-[colors.normal]
-black = "#475258"
-blue = "#7fbbb3"
-cyan = "#83c092"
-green = "#a7c080"
-magenta = "#d699b6"
-red = "#e67e80"
-white = "#d3c6aa"
-yellow = "#dbbc7f"
-#############################
-
-
+import = [
+    "~/.config/alacritty/theme.toml",
+    "~/.alacritty_local.toml"
+]
 
 [cursor]
 blink_interval = 500
@@ -59,9 +15,6 @@ shape = "Underline"
 
 [env]
 TERM = "xterm-256color"
-
-[font]
-size = 11
 
 [font.bold]
 family = "Hack Nerd Font"
@@ -80,10 +33,8 @@ family = "Hack Nerd Font"
 style = "Regular"
 
 [window]
-#decorations = "none"
 dynamic_padding = true
 dynamic_title = true
-#startup_mode = "Maximized"
 
 [window.dimensions]
 columns = 120

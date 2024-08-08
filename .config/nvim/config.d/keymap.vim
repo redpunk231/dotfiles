@@ -71,9 +71,9 @@ nmap <silent> <C-P>         :call TelescopeFiles()<Cr>
 vmap <silent> <C-P> <esc>   :call TelescopeFiles()<Cr>
 imap <silent> <C-P> <esc>   :call TelescopeFiles()<Cr>
 
-nmap <silent> <A-p>         :Telescope buffers sort_lastused=true<Cr>
-vmap <silent> <A-p> <esc>   :Telescope buffers sort_lastused=true<Cr>
-imap <silent> <A-p> <esc>   :Telescope buffers sort_lastused=true<Cr>
+nmap <silent> <A-p>         :Telescope buffers sort_mru=true ignore_current_buffer=true<Cr>
+vmap <silent> <A-p> <esc>   :Telescope buffers sort_mru=true ignore_current_buffer=true<Cr>
+imap <silent> <A-p> <esc>   :Telescope buffers sort_mru=true ignore_current_buffer=true<Cr>
 
 nmap <silent> <A-l>         :LspRestart<Cr>
 vmap <silent> <A-l> <esc>   :LspRestart<Cr>
