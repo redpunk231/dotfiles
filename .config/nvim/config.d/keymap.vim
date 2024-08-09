@@ -85,10 +85,6 @@ vmap <silent> <leader>fg <esc>   :Telescope live_grep<CR>
 nmap <silent> <leader>fw         :Telescope grep_string<CR>
 vmap <silent> <leader>fw <esc>   :Telescope grep_string<CR>
 
-"nmap <silent> <leader>gb            :Telescope git_branches<Cr>
-"vmap <silent> <leader>gb    <esc>   :Telescope git_branches<Cr>
-"imap <silent> <leader>gb    <esc>   :Telescope git_branches<Cr>
-
 nmap <silent> <leader>gb            :call TelescopeGitBranches()<Cr>
 vmap <silent> <leader>gb    <esc>   :call TelescopeGitBranches()<Cr>
 imap <silent> <leader>gb    <esc>   :call TelescopeGitBranches()<Cr>

@@ -34,5 +34,10 @@ cmp.setup {
         { name = 'path' },
         { name = 'buffer' },
     },
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
 }
 EOF

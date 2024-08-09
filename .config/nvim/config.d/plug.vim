@@ -9,6 +9,9 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'ray-x/lsp_signature.nvim'
 
+" Diagnostic
+Plug 'rachartier/tiny-inline-diagnostic.nvim'
+
 " FileManager
 Plug 'kyazdani42/nvim-tree.lua'
 

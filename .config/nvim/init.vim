@@ -10,3 +10,4 @@ source $HOME/.config/nvim/config.d/treesitter.vim
 source $HOME/.config/nvim/config.d/auto-session.vim
 source $HOME/.config/nvim/config.d/telescope.vim
 "source $HOME/.config/nvim/config.d/fzf.vim
+source $HOME/.config/nvim/config.d/diagnostic.vim
