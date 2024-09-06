@@ -1,6 +1,6 @@
 call plug#begin()
 
-" LSP
+" LSP and complete
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -8,6 +8,15 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 Plug 'ray-x/lsp_signature.nvim'
+
+" Line
+Plug 'nvim-lualine/lualine.nvim'
+
+"Plug 'SmiteshP/nvim-navic'
+"Plug 'utilyre/barbecue.nvim'
+
+" Zen mode
+Plug 'shortcuts/no-neck-pain.nvim'
 
 " Diagnostic
 Plug 'rachartier/tiny-inline-diagnostic.nvim'

@@ -35,21 +35,9 @@ nmap <silent> <F8>       :bd<CR>
 vmap <silent> <F8> <esc> :bd<CR>
 imap <silent> <F8> <esc> :bd<CR>
 
-"nmap <silent> <F9>       :call GetTerminal()<CR>
-"vmap <silent> <F9> <esc> :call GetTerminal()<CR>
-"imap <silent> <F9> <esc> :call GetTerminal()<CR>
-
-nmap <silent> <F10>         :call TelescopeBuffersMin()<Cr>
-vmap <silent> <F10> <esc>   :call TelescopeBuffersMin()<Cr>
-imap <silent> <F10> <esc>   :call TelescopeBuffersMin()<Cr>
-
-nmap <silent> <F11>      :BufferLineCyclePrev<CR>
-vmap <silent> <F11> <esc>:BufferLineCyclePrev<CR>
-imap <silent> <F11> <esc>:BufferLineCyclePrev<CR>
-
-nmap <silent> <F12>      :BufferLineCycleNext<CR>
-vmap <silent> <F12> <esc>:BufferLineCycleNext<CR>
-imap <silent> <F12> <esc>:BufferLineCycleNext<CR>
+nmap <silent> <F12>         :call TelescopeBuffersMin()<Cr>
+vmap <silent> <F12> <esc>   :call TelescopeBuffersMin()<Cr>
+imap <silent> <F12> <esc>   :call TelescopeBuffersMin()<Cr>
 
 nmap <silent> <F14>       :NvimTreeFindFile<CR>
 vmap <silent> <F14> <esc> :NvimTreeFindFile<CR>
@@ -58,14 +46,6 @@ imap <silent> <F14> <esc> :NvimTreeFindFile<CR>
 nmap <silent> <F15> :TagbarToggle<CR>
 vmap <silent> <F15> <esc>:TagbarToggle<CR>
 imap <silent> <F15> <esc>:TagbarToggle<CR>
-
-nmap <silent> <F23>      :BufferLineMovePrev<CR>
-vmap <silent> <F23> <esc>:BufferLineMovePrev<CR>
-imap <silent> <F23> <esc>:BufferLineMovePrev<CR>
-
-nmap <silent> <F24>      :BufferLineMoveNext<CR>
-vmap <silent> <F24> <esc>:BufferLineMoveNext<CR>
-imap <silent> <F24> <esc>:BufferLineMoveNext<CR>
 
 nmap <silent> <C-P>         :call TelescopeFiles()<Cr>
 vmap <silent> <C-P> <esc>   :call TelescopeFiles()<Cr>

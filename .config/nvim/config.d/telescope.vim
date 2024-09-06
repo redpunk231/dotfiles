@@ -6,6 +6,9 @@ require("telescope").setup({
         mappings = {
             i = {
                 ["<esc>"] = actions.close,
+                ["<F11>"] = actions.move_selection_previous,
+                ["<F12>"] = actions.move_selection_next,
+
             },
         },
         vimgrep_arguments = {
@@ -22,6 +25,15 @@ require("telescope").setup({
             "-g!.mypy_cache/*",
             "-g!.git/*",
             "-g!__pycache__'",
+        },
+    },
+    pickers = {
+        buffers = {
+            mappings = {
+                i = {
+                    ["<C-d>"] = actions.delete_buffer
+                },
+            },
         },
     },
 })
