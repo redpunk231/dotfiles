@@ -10,40 +10,47 @@ sessions_list() {
         awk -F ':' '{print $2}'
 }
 
-session_preview() {
-    tmux list-windows -t $1 -F '#{window_active} #{window_name}' | \
-        sed 's/^1/*/g' | \
-        sed 's/^0/\ /g'
-}
-
 session_new() {
-    NAME=$(echo '' | \
-        $FZF_PATH/fzf-tmux -p 20%,6% \
+    DIR=$((echo $HOME; find ~/.code -type d -maxdepth 1) | \
+        $FZF_PATH/fzf-tmux -p 25%,15% \
             --info=hidden \
-            --no-separator \
-            --pointer=' ' \
-            --print-query \
-            --prompt='create session: '\
+            --prompt='work path: ' \
+            --border-label='Create session' \
     )
-    CODE=$?
+    [ $? -ne 0 ] && return 0
 
-    if [ $CODE -eq 0 ] || [ $CODE -eq 1 ]; then
-        if [ "$NAME" == "" ]; then
-            NAME=$(uuidgen)
+    SESSION_NAME=$(basename $DIR)
+    if [ "$DIR" == "$HOME" ]; then
+        SESSION_NAME="main"
+        sessions_list | grep '^main$' > /dev/null
+        if [ $? -eq 0 ]; then
+            SESSION_NAME=$(echo '' | \
+                $FZF_PATH/fzf-tmux -p 25%,6% \
+                    --info=hidden \
+                    --no-separator \
+                    --pointer=' ' \
+                    --print-query \
+                    --prompt='name: '\
+                    --border-label='Create session' \
+                    --query="$1" \
+            )
+            [ $? -ne 1 ] && return 0
+            if [ "$SESSION_NAME" == "" ]; then
+                SESSION_NAME="main_$(date +%Y%m%d_%H%M%S)"
+            fi
         fi
-
-        NAME=$(echo $NAME | sed 's/\ /_/g')
-        TMUX='' tmux new-session -d -s $NAME -c "~/"
-        tmux switch-client -t $NAME
     fi
+    SESSION_NAME=$(echo "$SESSION_NAME" | sed 's/\ /_/g' | sed 's/\.//g')
+
+    TMUX='' tmux new-session -d -s "$SESSION_NAME" -c "$DIR"
+    tmux switch-client -t "$SESSION_NAME"
 }
 
 session_rename() {
-    [[ "$1" == "main" ]] && return
-    tmux list-sessions -F '#{session_name}' | grep "^$1$" > /dev/null || return
+    sessions_list | grep "^$1$" > /dev/null || return
 
     NAME=$(echo '' | \
-        $FZF_PATH/fzf-tmux -p 20%,6% \
+        $FZF_PATH/fzf-tmux -p 25%,6% \
             --info=hidden \
             --no-separator \
             --pointer=' ' \
@@ -61,23 +68,10 @@ session_rename() {
     fi
 }
 
-window_new() {
-    DIR="~/"
-    SESSION_ID=$(tmux display-message -p '#{session_id}')
-
-    if [ "$SESSION_ID" != '$0' ]; then
-        if [ /tmp/tmux/PWD_$SESSION_ID ]; then
-            DIR="$(cat /tmp/tmux/PWD_$SESSION_ID)"
-        fi
-    fi
-
-    tmux new-window -a -c "$DIR"
-}
-
 window_rename() {
     CUR_NAME="$(tmux display-message -p '#W')"
     NAME=$(\
-        echo '' | $FZF_PATH/fzf-tmux -p 20%,6% \
+        echo '' | $FZF_PATH/fzf-tmux -p 25%,6% \
             --info=hidden \
             --no-separator \
             --pointer=' ' \
@@ -99,73 +93,26 @@ window_popup() {
     tmux display-popup -h 35% -w 65% -b rounded -d $PWD -S fg=colour241 -E zsh
 }
 
-
-window_move_to_session() {
-    SESSIONS=($(sessions_list))
-    if [ ${#SESSIONS[*]} -eq 1 ]; then
-        exit 0
-    fi
-
-    if [ "$1" == "next" ]; then
-        SESSION_NAME=${SESSIONS[1]}
-    elif [ "$1" == "prev" ]; then
-        SESSION_NAME=${SESSIONS[-1]}
-    else
-        exit 1
-    fi
-
-    tmux move-window -t $SESSION_NAME -a
-}
-
 main() {
     if [ -z "$TMUX_SESSION_MANAGER" ]; then
         export TMUX_SESSION_MANAGER=$$
     fi
 
-    SESSION_CURRENT=$(\
-        tmux list-sessions -F '#{session_activity}:#{session_name}' | \
-        sort -r | \
-        head -1 | \
-        awk -F ':' '{print $2}'\
-    )
-
+    SESSION_PREVIEW_CMD="tmux capture-pane -ep -t {}"
     FZF_DEFAULT_COMMAND="$SELF --session-list"
-
-    BREAK=0
-    while [ $BREAK -eq 0 ]; do
-        FZF_RESULT=$(\
-            $FZF_DEFAULT_COMMAND | \
-            $FZF_PATH/fzf-tmux --cycle -p 20%,99% -x 10000 --info=hidden --print-query \
-                --preview "$SELF --session-preview {}" \
-                --preview-window up,33%,border-none \
-                --bind 'focus:execute-silent(tmux switch-client -t {})' \
-                --bind "zero:execute-silent(tmux switch-client -t $SESSION_CURRENT)" \
-                --bind "esc:execute-silent(tmux switch-client -t $SESSION_CURRENT)+abort" \
-                --bind 'alt-j:execute-silent(tmux previous-window -t {})+refresh-preview' \
-                --bind 'alt-k:execute-silent(tmux next-window -t {})+refresh-preview' \
-                --bind "alt-d:execute-silent(tmux kill-session -t {})+reload($FZF_DEFAULT_COMMAND)" \
-                --bind "ctrl-alt-j:execute-silent($SELF --window-move prev)+up+reload($FZF_DEFAULT_COMMAND)" \
-                --bind "ctrl-alt-k:execute-silent($SELF --window-move next)+down+reload($FZF_DEFAULT_COMMAND)" \
-                --bind "alt-enter:clear-query+put(#create_session)+accept-or-print-query" \
-                --bind "alt-r:put(#rename_session)+accept-or-print-query" \
-        )
-        if [ $? -ne 130 ]; then
-            echo "$FZF_RESULT" | grep '^#create_session$' > /dev/null
-            if [ $? -eq 0 ]; then
-                session_new
-                break
-            fi
-
-            echo "$FZF_RESULT" | grep '^#rename_session' > /dev/null
-            if [ $? -eq 0 ]; then
-                NEW_NAME=$(echo "$FZF_RESULT" | sed 's/#rename_session//g' | xargs)
-                session_rename "$NEW_NAME"
-                continue
-            fi
-
-        fi
-        BREAK=1
-    done
+    FZF_RESULT=$(\
+        $FZF_DEFAULT_COMMAND | \
+        $FZF_PATH/fzf-tmux \
+            --cycle \
+            -p 95%,80% \
+            --preview="$SESSION_PREVIEW_CMD" \
+            --preview-window=top,90%,wrap \
+            --info=hidden \
+            --border-label='Sessions' \
+            --bind "alt-d:execute-silent(tmux kill-session -t {})+reload($FZF_DEFAULT_COMMAND)" \
+    )
+    [ $? -ne 0 ] && return 0
+    tmux switch-client -t $FZF_RESULT
 }
 
 while [[ $# -gt 0 ]]; do
@@ -180,18 +127,8 @@ while [[ $# -gt 0 ]]; do
             exit 0
         ;;
 
-        --session-preview)
-            session_preview $2
-            exit 0
-        ;;
-
         --session-rename)
             session_rename $2
-            exit 0
-        ;;
-
-        --window-new)
-            window_new
             exit 0
         ;;
 
@@ -202,11 +139,6 @@ while [[ $# -gt 0 ]]; do
 
         --window-popup)
             window_popup
-            exit 0
-        ;;
-
-        --window-move)
-            window_move_to_session $2
             exit 0
         ;;
     esac
