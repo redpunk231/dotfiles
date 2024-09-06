@@ -77,6 +77,19 @@ function work() {
     fi
 }
 
+function project() {
+    PROJECT_PATH=$(pwd)
+
+    if [ ! -f "venv/bin/activate" ]; then
+        echo "virtual env not found"
+        return 1
+    fi
+
+    tmux rename-window 'code'
+
+    source venv/bin/activate
+    nvim
+}
 
 function dexe() {
     tmux_rename "docker $1"
