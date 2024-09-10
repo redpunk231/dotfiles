@@ -12,6 +12,9 @@ source $HOME/.config/nvim/config.d/diagnostic.vim
 source $HOME/.config/nvim/config.d/lualine.vim
 
 
+source $HOME/.config/nvim/config.d/noice.vim
+
+
 " source $HOME/.config/nvim/config.d/nvim-navic.vim
 " source $HOME/.config/nvim/config.d/zen.vim
 " source $HOME/.config/nvim/config.d/fzf.vim
