@@ -1,8 +1,10 @@
 #!/bin/bash
 source ~/.profile_env
-SELF=$(realpath $0)
-
 [[ -z "$TMUX" ]] && exit 1
+
+SELF=$(realpath $0)
+FZF_NAMING_OPTS='--info=hidden --no-separator --tmux=25%,6% --print-query'
+
 
 sessions_list() {
     tmux list-sessions -F '#{session_activity}:#{session_name}' | \
@@ -12,7 +14,7 @@ sessions_list() {
 
 session_new() {
     DIR=$((echo $HOME; find ~/.code -type d -maxdepth 1) | \
-        $FZF_PATH/fzf-tmux -p 25%,15% \
+        fzf --tmux=25%,15% \
             --info=hidden \
             --prompt='work path: ' \
             --border-label='Create session' \
@@ -25,11 +27,7 @@ session_new() {
         sessions_list | grep '^main$' > /dev/null
         if [ $? -eq 0 ]; then
             SESSION_NAME=$(echo '' | \
-                $FZF_PATH/fzf-tmux -p 25%,6% \
-                    --info=hidden \
-                    --no-separator \
-                    --pointer=' ' \
-                    --print-query \
+                fzf $FZF_NAMING_OPTS \
                     --prompt='name: '\
                     --border-label='Create session' \
                     --query="$1" \
@@ -49,39 +47,31 @@ session_new() {
 session_rename() {
     sessions_list | grep "^$1$" > /dev/null || return
 
+
     NAME=$(echo '' | \
-        $FZF_PATH/fzf-tmux -p 25%,6% \
-            --info=hidden \
-            --no-separator \
-            --pointer=' ' \
-            --print-query \
+        fzf $FZF_NAMING_OPTS \
             --prompt='rename session: '\
             --query="$1"
     )
-    CODE=$?
+    [ $? -ne 1 ] && return 0
+    [ "$NAME" == "" ] && return 0
 
-    if [ $CODE -eq 0 ] || [ $CODE -eq 1 ]; then
-        if [ "$NAME" != "" ] && [ "$NAME" != "main" ]; then
-            NAME=$(echo $NAME | sed 's/\ /_/g')
-            TMUX='' tmux rename-session -t "$1" "$NAME"
-        fi
-    fi
+    NAME=$(echo $NAME | sed 's/\ /_/g')
+    TMUX='' tmux rename-session -t "$1" "$NAME"
 }
 
 window_rename() {
     CUR_NAME="$(tmux display-message -p '#W')"
     NAME=$(\
-        echo '' | $FZF_PATH/fzf-tmux -p 25%,6% \
-            --info=hidden \
-            --no-separator \
-            --pointer=' ' \
-            --print-query \
-            --prompt='rename window: '\
-            -q "$CUR_NAME"\
+        echo '' | fzf $FZF_NAMING_OPTS \
+            --prompt='rename window: ' \
+            -q "$CUR_NAME" \
     )
-    if [ $? -ne 130 ] && [ "$NAME" != "" ] && [ "$NAME" != "$CUR_NAME" ]; then
-        tmux rename-window "$NAME"
-    fi
+    [ $? -ne 1 ] && return 0
+    [ "$NAME" == "" ] && return 0
+    [ "$NAME" == "$CUR_NAME" ] && return 0
+
+    tmux rename-window "$NAME"
 }
 
 window_popup() {
@@ -90,27 +80,32 @@ window_popup() {
         grep '^1' | \
         sed 's/^1://g'\
     )
-    tmux display-popup -h 35% -w 65% -b rounded -d $PWD -S fg=colour241 -E zsh
+    tmux display-popup \
+        -h 35% -w 65% \
+        -b rounded \
+        -d $PWD \
+        -S fg=colour241 \
+        -E zsh
 }
 
 main() {
-    if [ -z "$TMUX_SESSION_MANAGER" ]; then
-        export TMUX_SESSION_MANAGER=$$
-    fi
-
     SESSION_PREVIEW_CMD="tmux capture-pane -ep -t {}"
     FZF_DEFAULT_COMMAND="$SELF --session-list"
     FZF_RESULT=$(\
         $FZF_DEFAULT_COMMAND | \
-        $FZF_PATH/fzf-tmux \
+        fzf \
             --cycle \
-            -p 95%,80% \
+            --tmux=95%,80% \
             --preview="$SESSION_PREVIEW_CMD" \
             --preview-window=top,90%,wrap \
             --info=hidden \
             --border-label='Sessions' \
             --bind "alt-d:execute-silent(tmux kill-session -t {})+reload($FZF_DEFAULT_COMMAND)" \
+            --bind "alt-k:up" \
+            --bind "alt-j:down" \
+            --bind "alt-r:execute-silent(tmux send-prefix; tmux send $)" \
     )
+
     [ $? -ne 0 ] && return 0
     tmux switch-client -t $FZF_RESULT
 }
