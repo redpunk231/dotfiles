@@ -1,5 +1,5 @@
 lua << EOF
-vim.opt.cmdheight = 0
+vim.opt.cmdheight = 1
 
 local colors = {
     bg0    = '#2d353b',
@@ -68,8 +68,7 @@ require('lualine').setup {
     },
     sections = {
         lualine_a = {'mode'},
-        lualine_b = {''},
-        lualine_c = {{
+        lualine_b = {{
             'filename',
             symbols = {
                 modified = '•',         -- Text to show when the file is modified.
@@ -78,9 +77,21 @@ require('lualine').setup {
                 newfile = '[New]',      -- Text to show for newly created file before first write
             }
         }},
+        lualine_c = {{
+ --           'branch',
+ --           fmt = function(str)
+ --               local len = string.len(str)
+ --               if len < 30 then
+ --                   return str
+ --               end
+ --               return str:sub(1,29) .. "…"
+ --           end
+        }},
         lualine_x = {'diagnostics'},
         lualine_y = {'progress', 'location'},
-        lualine_z = {}
+        lualine_z = {
+
+        }
     },
     inactive_sections = {
         lualine_a = {},
