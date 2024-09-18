@@ -1,5 +1,6 @@
 return {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = {
         "nvim-telescope/telescope.nvim",
         {
@@ -48,72 +49,63 @@ return {
         {
             "williamboman/mason.nvim",
         },
-        {
-            "williamboman/mason-lspconfig.nvim",
-            config = function()
-                require("mason").setup()
-                require("mason-lspconfig").setup({
-                    ensure_installed = {
-                        "pyright",
-                    }
-                })
-                require("mason-lspconfig").setup_handlers {
-                    function (server_name)
-                        require("lspconfig")[server_name].setup {}
-                    end,
-                }
-            end
-        },
-        {
-            "nvimtools/none-ls.nvim",
-            dependencies = { "nvim-lua/plenary.nvim" },
-            config = function(_, opts)
-                local null_ls = require("null-ls")
-                local formatters = null_ls.builtins.formatting
-                null_ls.setup({
-                    sources = {
-                        formatters.black.with({
-                            extra_args = {
-                                "--line-length=120",
-                                "--skip-string-normalization",
-                            }
-                        }),
-                    },
-                })
-            end
-        }
     },
-    event = "User FilePost",
-    -- opts = function()
-    --     local telescope = require("telescope.builtin")
-    --     local M = {}
-    --     local map = vim.keymap.set
-    --
-    --     -- export on_attach & capabilities
-    --     M.on_attach = function(_, bufnr)
-    --         local function opts(desc)
-    --             return { buffer = bufnr, desc = "LSP " .. desc, noremap=true, silent=true }
-    --         end
-    --
-    --         map("n", "gr", telescope.lsp_references)
-    --         map("n", "gd", telescope.lsp_definitions)
-    --
-    --         map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
-    --         map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
-    --     end
-    --
-    --     return M
-    -- end,
-    -- config = function(_, opts)
-    --     local servers = { 'pyright' }
-    --     local nvim_lsp = require('lspconfig')
-    --     for _, lsp in ipairs(servers) do
-    --         nvim_lsp[lsp].setup {
-    --             on_attach = opts.on_attach,
-    --             flags = {
-    --                 debounce_text_changes = 150,
-    --             }
-    --         }
-    --     end
-    -- end
+    opts = function()
+        local telescope = require("telescope.builtin")
+        local M = {}
+        local map = vim.keymap.set
+
+        -- export on_attach & capabilities
+        M.on_attach = function(_, bufnr)
+            local function opts(desc)
+                return { buffer = bufnr, desc = "LSP " .. desc, noremap=true, silent=true }
+            end
+
+            map("n", "gr", telescope.lsp_references)
+            map("n", "gd", telescope.lsp_definitions)
+            map("n", "<space>rn", vim.lsp.buf.rename)
+
+            map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+            map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
+
+            -- bufmap("n", "gr", telescope.lsp_references)
+            -- bufmap("n", "gd", telescope.lsp_definitions)
+            -- bufmap("n", "gD", vim.lsp.buf.declaration)
+            -- bufmap("n", "<leader>sh", vim.lsp.buf.signature_help)
+            -- bufmap("n", "<space>rn", vim.lsp.buf.rename)
+            --
+            -- -- bufmap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>')
+            -- -- bufmap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+            -- -- bufmap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
+            -- -- bufmap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
+            -- -- bufmap('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
+            -- -- bufmap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>')
+            -- -- bufmap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
+            -- -- bufmap('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>')
+            -- -- bufmap({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>')
+            -- -- bufmap('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>')
+            -- -- bufmap('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<cr>')
+            -- -- bufmap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
+            -- -- bufmap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>')
+        end
+
+        return M
+    end,
+    config = function(_, opts)
+        require("mason").setup()
+        local nvim_lsp = require('lspconfig')
+        nvim_lsp['pyright'].setup {
+            on_attach = opts.on_attach,
+            flags = {
+                debounce_text_changes = 150,
+            },
+            settings = {
+                python = {
+                    analysis = {
+                        typeCheckingMode = 'off'
+                    }
+                }
+            }
+        }
+    end
 }

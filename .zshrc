@@ -90,6 +90,7 @@ function project() {
     source venv/bin/activate
     nvim
 }
+alias pr='project'
 
 function dexe() {
     tmux_rename "docker $1"
