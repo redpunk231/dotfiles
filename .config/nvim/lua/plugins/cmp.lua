@@ -13,23 +13,6 @@ return {
             end,
         },
 
-        -- autopairing of (){}[] etc
-        {
-            "windwp/nvim-autopairs",
-            config = function(_, opts)
-                require("nvim-autopairs").setup({
-                    fast_wrap = {},
-                    disable_filetype = { "TelescopePrompt", "vim" },
-                })
-
-                local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-                require("cmp").event:on(
-                    "confirm_done",
-                    cmp_autopairs.on_confirm_done()
-                )
-            end,
-        },
-
         -- cmp sources plugins
         {
             "saadparwaiz1/cmp_luasnip",
