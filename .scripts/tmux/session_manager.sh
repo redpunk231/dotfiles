@@ -3,7 +3,7 @@ source ~/.profile_env
 [[ -z "$TMUX" ]] && exit 1
 
 SELF=$(realpath $0)
-FZF_NAMING_OPTS='--info=hidden --no-separator --tmux=25%,6% --print-query'
+FZF_NAMING_OPTS='--info=hidden --no-separator --tmux=25%,5% --print-query'
 
 
 sessions_list() {
@@ -13,7 +13,7 @@ sessions_list() {
 }
 
 session_new() {
-    DIR=$((echo $HOME; find ~/.code -type d -maxdepth 1) | \
+    DIR=$((echo $HOME; find ~/.code -maxdepth 1 -type d) | \
         fzf --tmux=25%,15% \
             --info=hidden \
             --prompt='work path: ' \
@@ -61,7 +61,7 @@ session_rename() {
 }
 
 window_rename() {
-    CUR_NAME="$(tmux display-message -p '#W')"
+    CUR_NAME="$(tmux display-message -p '#W' | grep -v '^\(zsh\|nvim\|less\)$')"
     NAME=$(\
         echo '' | fzf $FZF_NAMING_OPTS \
             --prompt='rename window: ' \
