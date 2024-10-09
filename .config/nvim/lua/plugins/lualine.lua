@@ -133,25 +133,19 @@ return {
                 },
                 lualine_c = {
                     {
-                        'filetype',
-                        icon_only = true,
-                        padding = { left = 1, right = 0}
-                    },
-                    {
                         'filename',
-                        padding = { left = 0, right = 1},
                         symbols = {
-                            modified = '•',         -- Text to show when the file is modified.
-                            readonly = '[-]',       -- Text to show when the file is non-modifiable or readonly.
-                            unnamed = ' [No Name]',  -- Text to show for unnamed buffers.
-                            newfile = ' [New]',      -- Text to show for newly created file before first write
+                            modified = '•',
+                            readonly = '',
+                            unnamed = '[No Name]',
+                            newfile = '',
                         }
                     },
-                    { 'diagnostics' },
                 },
                 lualine_x = {
                 },
                 lualine_y = {
+                    { 'diagnostics' },
                 },
                 lualine_z = {
                     { 'progress' },

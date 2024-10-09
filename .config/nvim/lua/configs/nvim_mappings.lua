@@ -1,5 +1,7 @@
 local map = vim.keymap.set
 
+map({"n","i","v"}, "<F1>", "<esc>")
+
 map("n", "ff", "/<C-r><C-w><cr>N") -- find word under cursor
 map("n", "fr", [[:%s/<C-r><C-w>//g<Left><Left>]]) -- replase word under cursor
 

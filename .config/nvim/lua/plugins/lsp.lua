@@ -7,10 +7,10 @@ return {
             "rachartier/tiny-inline-diagnostic.nvim",
             config = function()
                 local signs = {
-                    Error = "",
-                    Warn = "",
-                    Hint = "",
-                    Info = ""
+                    Error = "",
+                    Warn = "",
+                    Hint = "",
+                    Info = ""
                 }
                 for type, icon in pairs(signs) do
                     local hl = "DiagnosticSign" .. type
@@ -48,6 +48,7 @@ return {
         },
         {
             "williamboman/mason.nvim",
+            cmd = {"Mason"},
         },
     },
     opts = function()
@@ -102,7 +103,7 @@ return {
             settings = {
                 python = {
                     analysis = {
-                        typeCheckingMode = 'off'
+                        -- typeCheckingMode = 'off'
                     }
                 }
             }
