@@ -16,7 +16,40 @@ zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 PROMPT="$PROMPT› "
-# export FZF_DEFAULT_COMMAND='fdfind --type f --exclude="*__pycache__*" --exclude="*.pyc"'
+
+function die() {
+    echo "$1"
+    return 1
+}
+
+function nvim_upgrade() {
+    DIR=$PWD
+    cd ~/.nvim_releases
+
+    echo 'download latest neovim release...'
+    curl --silent -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    [ $? -eq 0 ] || die 'download latest neovim release failed...'
+
+    echo 'check sum...'
+    md5sum -c --quiet .md5
+    if [ $? -eq 0 ]; then
+        echo "upgrade not required..."
+        cd $DIR
+        return 0
+    fi
+
+    echo 'started upgrading...'
+    sudo rm -rf /opt/nvim-linux64
+    sudo tar -C /opt -xzf nvim-linux64.tar.gz
+
+    md5sum nvim-linux64.tar.gz > .md5
+
+    echo 'finished upgrading...'
+    echo
+    echo "$(/opt/nvim-linux64/bin/nvim -v)"
+
+    cd $DIR
+}
 
 function tmux_rename() {
     NAME=$1
@@ -176,3 +209,7 @@ function pip-refresh() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(zoxide init zsh)"
+
+source $HOME/.cargo/env
