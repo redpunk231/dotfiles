@@ -6,7 +6,7 @@ CACHE="$HOME/.cache/rofi"
 
 ### Run ###
 rofi \
-    -show drun \
+    -show drun window \
     -theme $THEME \
     -cache-dir $CACHE \
     -sorting-method fzf \
