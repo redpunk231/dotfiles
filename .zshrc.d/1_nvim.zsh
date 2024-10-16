@@ -1,0 +1,38 @@
+DIR_UPDATE_TMP="$HOME/.nvim_releases"
+DIR_OPT='/opt'
+DIR_OPT_NVIM="$DIR_OPT/nvim-linux64"
+URL_DISTRIB='https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz'
+FILE_DISTRIB='nvim.tar.gz'
+
+function die() { echo "$1";  return 1 }
+
+function nvim_upgrade() {
+    DIR=$PWD
+    cd "$DIR_UPDATE_TMP"
+
+    echo 'download latest neovim release...'
+    curl --silent -L "$URL_DISTRIB" -o "$FILE_DISTRIB"
+    [ $? -eq 0 ] || die 'download latest neovim release failed...'
+
+    echo 'check sum...'
+    md5sum -c --quiet .md5
+    if [ $? -eq 0 ]; then
+        echo "upgrade not required..."
+        cd $DIR
+        return 0
+    fi
+
+    echo 'started upgrading...'
+    sudo rm -rf "$DIR_OPT_NVIM"
+    sudo tar -C "$DIR_OPT" -xzf "$FILE_DISTRIB"
+
+    md5sum "$FILE_DISTRIB" > .md5
+
+    echo 'finished upgrading...'
+    echo
+    echo "$($DIR_OPT_NVIM/bin/nvim -v)"
+
+    cd $DIR
+}
+
+alias vim='nvim'
