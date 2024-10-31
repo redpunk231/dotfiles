@@ -2,68 +2,30 @@ local colors = {
     bg0     = '#2D353B',
     bg1     = '#343F44',
     bg2     = '#3D484D',
-    bg3     = '#475258',
-    bg4     = '#4F585E',
-    fg      = '#D8CAAC',
-    aqua    = '#87C095',
     green   = '#A7C080',
     orange  = '#E39B7B',
     purple  = '#D39BB6',
     red     = '#E68183',
-    grey1   = '#868D80',
+    grey0   = '#7A8478',
+    grey1   = '#859289',
+    grey2   = '#9DA9A0',
 }
-local theme_cell_0 = { bg = colors.bg0, fg = colors.fg }
-local theme_cell_1 = { bg = colors.bg1, fg = colors.fg }
+
+local theme_modes = {
+    a = { bg = colors.bg2, fg = colors.grey2 },
+    b = { bg = colors.bg1, fg = colors.grey1 },
+    c = { bg = colors.bg0, fg = colors.grey0 },
+    x = { bg = colors.bg0, fg = colors.grey0 },
+    y = { bg = colors.bg1, fg = colors.grey1 },
+    z = { bg = colors.bg2, fg = colors.grey2 },
+}
 
 local theme = {
-    normal = {
-        a = { bg = colors.green, fg = colors.bg0, gui = 'bold' },
-        b = theme_cell_1,
-        c = theme_cell_0,
-        x = theme_cell_0,
-        y = theme_cell_0,
-        z = theme_cell_0,
-    },
-    insert = {
-        a = { bg = colors.aqua, fg = colors.bg0, gui = 'bold' },
-        b = theme_cell_1,
-        c = theme_cell_0,
-        x = theme_cell_0,
-        y = theme_cell_0,
-        z = theme_cell_0,
-    },
-    visual = {
-        a = { bg = colors.red, fg = colors.bg0, gui = 'bold' },
-        b = theme_cell_1,
-        c = theme_cell_0,
-        x = theme_cell_0,
-        y = theme_cell_0,
-        z = theme_cell_0,
-    },
-    replace = {
-        a = { bg = colors.orange, fg = colors.bg0, gui = 'bold' },
-        b = theme_cell_1,
-        c = theme_cell_0,
-        x = theme_cell_0,
-        y = theme_cell_0,
-        z = theme_cell_0,
-    },
-    terminal = {
-        a = { bg = colors.purple, fg = colors.bg0, gui = 'bold' },
-        b = theme_cell_1,
-        c = theme_cell_0,
-        x = theme_cell_0,
-        y = theme_cell_0,
-        z = theme_cell_0,
-    },
-    inactive = {
-        a = { bg = colors.bg0, fg = colors.grey1, gui = 'bold' },
-        b = { bg = colors.bg0, fg = colors.grey1 },
-        c = { bg = colors.bg0, fg = colors.grey1 },
-        x = { bg = colors.bg0, fg = colors.grey1 },
-        y = { bg = colors.bg0, fg = colors.grey1 },
-        z = { bg = colors.bg0, fg = colors.grey1 },
-    },
+    normal = theme_modes,
+    insert = theme_modes,
+    visual = theme_modes,
+    replace = theme_modes,
+    terminal = theme_modes,
 }
 
 
@@ -92,6 +54,17 @@ local function diff_source()
     end
 end
 
+local conditions = {
+    show_cwd = function()
+        return vim.o.columns > 70
+    end,
+    show_line_col = function()
+        return vim.o.columns > 90
+    end,
+    show_git = function()
+        return vim.o.columns > 125
+    end
+}
 
 return {
     'nvim-lualine/lualine.nvim',
@@ -103,7 +76,7 @@ return {
                 icons_enabled = true,
                 theme = theme,
                 component_separators = '',
-                section_separators = '',
+                section_separators = { left = '', right = '' },
                 disabled_filetypes = {
                     statusline = {'TelescopePrompt'},
                     winbar = {},
@@ -120,15 +93,41 @@ return {
             sections = {
                 lualine_a = {
                     {
+                        function()
+                            return ""
+                        end,
+                        color = function()
+                            local mode_color = {
+                                n = colors.grey1,
+                                i = colors.green,
+                                v = colors.orange,
+                                [""] = colors.orange,
+                                V = colors.orange,
+                                R = colors.red,
+                                Rv = colors.red,
+                                c = colors.grey1,
+                                t = colors.purple,
+                            }
+                            return {
+                                fg = mode_color[vim.fn.mode()],
+                                gui = 'bold'
+                            }
+                        end,
+                        padding = { right = 0, left = 1}
+                    },
+                    {
                         'mode',
-                        icon=""
+                        fmt = function(str)
+                            return str:lower()
+                        end
                     }
                 },
                 lualine_b = {
                     {
                         'branch',
                         icon = '󰘬',
-                        fmt = trunc(25, 21, 3)
+                        fmt = trunc(25, 21, 3),
+                        cond = conditions.show_git
                     },
                 },
                 lualine_c = {
@@ -139,17 +138,27 @@ return {
                             readonly = '',
                             unnamed = '[No Name]',
                             newfile = '',
-                        }
+                        },
                     },
                 },
                 lualine_x = {
+                    {
+                        function()
+                            return "ln %l, col %c"
+                        end,
+                        cond = conditions.show_line_col,
+                    },
                 },
                 lualine_y = {
-                    { 'diagnostics' },
+                    {
+                        function()
+                            local filepath = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+                            return "󰉋 " .. filepath
+                        end,
+                        cond = conditions.show_cwd,
+                    },
                 },
                 lualine_z = {
-                    { 'progress' },
-                    { 'location' }
                 },
             },
             inactive_sections = {
