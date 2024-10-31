@@ -14,14 +14,16 @@ function python_env() {
 }
 alias v='python_env'
 
-# PIP stuff
+# PIP
 alias pip='noglob pip'
-alias pip-tools-upgrade='pip install --upgrade pip-tools'
-alias pip-compile='pip-compile --rebuild --quiet --annotation-style line --no-header --upgrade --resolver=backtracking'
-alias pip-compile-hash='pip-compile --rebuild --quiet --annotation-style line --no-header --upgrade --resolver=backtracking --generate-hashes'
-function pip-refresh() {
-    pip-compile \
-        --rebuild --quiet --annotation-style line --no-header --upgrade --resolver=backtracking \
-        -o requirements.txt requirements.in \
-        && pip-sync
-}
+
+# UV
+alias uv-update-version='uv self update'
+
+alias uvenv39='uv venv --python 3.9 venv'
+alias uvenv310='uv venv --python 3.10 venv'
+alias uvenv311='uv venv --python 3.11 venv'
+alias uvenv312='uv venv --python 3.12 venv'
+alias uvenv313='uv venv --python 3.13 venv'
+
+alias upip='uv pip'

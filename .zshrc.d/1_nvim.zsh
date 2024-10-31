@@ -4,15 +4,16 @@ DIR_OPT_NVIM="$DIR_OPT/nvim-linux64"
 URL_DISTRIB='https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz'
 FILE_DISTRIB='nvim.tar.gz'
 
-function die() { echo "$1";  return 1 }
-
 function nvim_upgrade() {
     DIR=$PWD
     cd "$DIR_UPDATE_TMP"
 
     echo 'download latest neovim release...'
     curl --silent -L "$URL_DISTRIB" -o "$FILE_DISTRIB"
-    [ $? -eq 0 ] || die 'download latest neovim release failed...'
+    if [ $? -ne 0 ]; then
+        echo 'download latest neovim release failed...'
+        return 1
+    fi 
 
     echo 'check sum...'
     md5sum -c --quiet .md5

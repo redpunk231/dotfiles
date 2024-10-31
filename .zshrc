@@ -21,7 +21,7 @@ zstyle ':completion:*:*:docker-*:*' option-stacking yes
 PROMPT="$PROMPT› "
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf.zsh ] && source $HOME/.fzf.zsh
 eval "$(zoxide init zsh)"
 source $HOME/.cargo/env
 

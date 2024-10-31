@@ -1,7 +1,7 @@
 TMP_PROJECTS_PATH="$HOME/.code_tmp"
 
 function project() {
-    python_env || return 1
+    # python_env || return 1
     tmux_rename_window 'code'
     nvim
 }
