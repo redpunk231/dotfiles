@@ -5,7 +5,7 @@ plugins=(
     docker
     docker-compose
     fzf
-    #zsh-autosuggestions
+    uv
 )
 
 source $ZSH/oh-my-zsh.sh

@@ -98,7 +98,7 @@ return {
                         end,
                         color = function()
                             local mode_color = {
-                                n = colors.grey1,
+                                n = colors.grey2,
                                 i = colors.green,
                                 v = colors.orange,
                                 [""] = colors.orange,
@@ -136,7 +136,7 @@ return {
                         symbols = {
                             modified = '•',
                             readonly = '',
-                            unnamed = '[No Name]',
+                            unnamed = '[no name]',
                             newfile = '',
                         },
                     },
@@ -150,6 +150,8 @@ return {
                     },
                 },
                 lualine_y = {
+                },
+                lualine_z = {
                     {
                         function()
                             local filepath = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
@@ -157,8 +159,6 @@ return {
                         end,
                         cond = conditions.show_cwd,
                     },
-                },
-                lualine_z = {
                 },
             },
             inactive_sections = {

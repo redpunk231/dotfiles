@@ -20,6 +20,7 @@ alias pip='noglob pip'
 # UV
 alias uv-update-version='uv self update'
 
+alias uvenv38='uv venv --python 3.8 venv'
 alias uvenv39='uv venv --python 3.9 venv'
 alias uvenv310='uv venv --python 3.10 venv'
 alias uvenv311='uv venv --python 3.11 venv'
