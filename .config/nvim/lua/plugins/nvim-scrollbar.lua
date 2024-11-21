@@ -14,7 +14,8 @@ return {
     opts = function()
         return {
             handle = {
-                blend = 0
+                blend = 30,
+                color = "#425047"
             },
             marks = {
                 GitAdd = { text = "" },

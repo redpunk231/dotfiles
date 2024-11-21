@@ -14,7 +14,6 @@ autocmd({'BufEnter', 'TermEnter'}, {
     pattern = 'term://*',
     callback = function()
         local opts = {buffer = 0}
-        -- vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
         vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
         vim.schedule(
             function()

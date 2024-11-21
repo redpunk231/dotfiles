@@ -2,10 +2,6 @@ local colors = {
     bg0     = '#2D353B',
     bg1     = '#343F44',
     bg2     = '#3D484D',
-    green   = '#A7C080',
-    orange  = '#E39B7B',
-    purple  = '#D39BB6',
-    red     = '#E68183',
     grey0   = '#7A8478',
     grey1   = '#859289',
     grey2   = '#9DA9A0',
@@ -29,7 +25,7 @@ local theme = {
 }
 
 
-function trunc(max_width, left_width, right_width)
+local function trunc(max_width, left_width, right_width)
     return function(str)
         if #str <= max_width then
             return str
@@ -40,17 +36,6 @@ function trunc(max_width, left_width, right_width)
         local right = str:sub(#str - right_width + 1, #str)
 
         return left .. '…' .. right
-    end
-end
-
-local function diff_source()
-    local gitsigns = vim.b.gitsigns_status_dict
-    if gitsigns then
-        return {
-            added = gitsigns.added,
-            modified = gitsigns.changed,
-            removed = gitsigns.removed
-        }
     end
 end
 
@@ -65,6 +50,8 @@ local conditions = {
         return vim.o.columns > 125
     end
 }
+
+local devicons_ok, devicons = pcall(require, 'nvim-web-devicons')
 
 return {
     'nvim-lualine/lualine.nvim',
@@ -84,41 +71,13 @@ return {
                 ignore_focus = {},
                 always_divide_middle = true,
                 globalstatus = true,
-                refresh = {
-                    statusline = 1000,
-                    tabline = 1000,
-                    winbar = 1000,
-                }
             },
             sections = {
                 lualine_a = {
                     {
-                        function()
-                            return ""
-                        end,
-                        color = function()
-                            local mode_color = {
-                                n = colors.grey2,
-                                i = colors.green,
-                                v = colors.orange,
-                                [""] = colors.orange,
-                                V = colors.orange,
-                                R = colors.red,
-                                Rv = colors.red,
-                                c = colors.grey1,
-                                t = colors.purple,
-                            }
-                            return {
-                                fg = mode_color[vim.fn.mode()],
-                                gui = 'bold'
-                            }
-                        end,
-                        padding = { right = 0, left = 1}
-                    },
-                    {
                         'mode',
                         fmt = function(str)
-                            return str:lower()
+                            return " " .. str:lower()
                         end
                     }
                 },
@@ -132,11 +91,23 @@ return {
                 },
                 lualine_c = {
                     {
+                        function()
+                            icon, icon_highlight_group = devicons.get_icon_by_filetype(vim.bo.filetype)
+                            if icon == nil then
+                                return ""
+                            end
+
+                            return icon
+                        end,
+                        padding = { left = 1, right = 0 }
+
+                    },
+                    {
                         'filename',
                         symbols = {
                             modified = '•',
                             readonly = '',
-                            unnamed = '[no name]',
+                            unnamed = 'new',
                             newfile = '',
                         },
                     },
