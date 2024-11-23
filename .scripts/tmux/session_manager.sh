@@ -81,7 +81,7 @@ window_popup() {
         sed 's/^1://g'\
     )
     tmux display-popup \
-        -h 35% -w 65% \
+        -h 30% -w 50% \
         -b rounded \
         -d $PWD \
         -S fg=colour241 \

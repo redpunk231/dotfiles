@@ -23,7 +23,7 @@ PROMPT="$PROMPT› "
 
 [ -f ~/.fzf.zsh ] && source $HOME/.fzf.zsh
 eval "$(zoxide init zsh)"
-# source $HOME/.cargo/env
+[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
 
 function update-dotfiles() {
     if [ "$(pwd)" != "$HOME/.dotfiles" ]; then
