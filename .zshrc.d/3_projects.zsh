@@ -34,3 +34,8 @@ function tmp_project() {
 }
 
 alias pr='project'
+
+function mkpypkg() {
+    mkdir ./$1
+    touch ./$1/__init__.py
+}
