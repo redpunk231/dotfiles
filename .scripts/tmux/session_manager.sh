@@ -95,9 +95,7 @@ main() {
         $FZF_DEFAULT_COMMAND | \
         fzf \
             --cycle \
-            --tmux=95%,80% \
-            --preview="$SESSION_PREVIEW_CMD" \
-            --preview-window=top,90%,wrap \
+            --tmux=15%,15% \
             --info=hidden \
             --border-label='Sessions' \
             --bind "alt-d:execute-silent(tmux kill-session -t {})+reload($FZF_DEFAULT_COMMAND)" \
