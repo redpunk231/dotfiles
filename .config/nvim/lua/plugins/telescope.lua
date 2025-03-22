@@ -1,3 +1,53 @@
+--
+-- Keymaps
+--
+vim.keymap.set("n", "<leader>fw", "<cmd>Telescope grep_string<cr>")
+vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
+vim.keymap.set("n", "<leader>ff", function()
+    require'telescope.builtin'.find_files(
+        require('telescope.themes').get_dropdown({
+            previewer=false,
+            prompt_title=false,
+            prompt_prefix='Files> '
+        })
+    )
+end)
+vim.keymap.set("n", "<leader>fb", function()
+    require'telescope.builtin'.git_branches(
+        require('telescope.themes').get_dropdown({
+            previewer=false,
+            prompt_title=false,
+            prompt_prefix='Branches> ',
+            layout_config = {width = 70}
+        })
+    )
+end)
+vim.keymap.set("n", "<F12>", function()
+    require'telescope.builtin'.buffers(
+        require('telescope.themes').get_dropdown({
+            sort_mru=true,
+            ignore_current_buffer=true,
+            previewer=false,
+            prompt_title=false,
+            prompt_prefix='Buffers> '
+        })
+    )
+end)
+vim.keymap.set({"n","i","v"}, "<F3>", function()
+    require'telescope.builtin'.treesitter({
+        ignore_symbols={
+            'parameter',
+            'import',
+            'method',
+            'var'
+        }
+    })
+end)
+
+
+--
+-- Setup
+--
 return {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },

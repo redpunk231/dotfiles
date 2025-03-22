@@ -85,7 +85,7 @@ return {
                     {
                         'branch',
                         icon = '󰘬',
-                        fmt = trunc(25, 21, 3),
+                        fmt = trunc(40, 26, 3),
                         cond = conditions.show_git
                     },
                 },

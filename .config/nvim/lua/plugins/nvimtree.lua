@@ -1,3 +1,13 @@
+--
+-- Keymaps
+--
+vim.keymap.set({"n", "i", "v"}, "<F2>", "<esc><cmd>NvimTreeToggle<cr>")
+vim.keymap.set({"n", "i", "v"}, "<F14>", "<esc><cmd>NvimTreeFocus<cr>")
+
+
+--
+-- Setup
+--
 local win_pick_theme = {
     fg = '#D3C6AA',
     bg = '#3A515D',

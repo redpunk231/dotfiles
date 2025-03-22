@@ -1,3 +1,14 @@
+--
+-- Keymaps
+--
+vim.keymap.set({"n","i","v"}, "<F7>", function()
+    require("tiny-inline-diagnostic").toggle() 
+end)
+
+
+--
+-- Setup
+--
 return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPost", "BufNewFile" },
@@ -54,7 +65,6 @@ return {
     opts = function()
         local telescope = require("telescope.builtin")
         local M = {}
-        local map = vim.keymap.set
 
         -- export on_attach & capabilities
         M.on_attach = function(_, bufnr)
@@ -62,12 +72,12 @@ return {
                 return { buffer = bufnr, desc = "LSP " .. desc, noremap=true, silent=true }
             end
 
-            map("n", "gr", telescope.lsp_references)
-            map("n", "gd", telescope.lsp_definitions)
-            map("n", "<space>rn", vim.lsp.buf.rename)
+            vim.keymap.set("n", "gr", telescope.lsp_references)
+            vim.keymap.set("n", "gd", telescope.lsp_definitions)
+            vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
 
-            map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
-            map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
+            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+            vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
 
             -- bufmap("n", "gr", telescope.lsp_references)
             -- bufmap("n", "gd", telescope.lsp_definitions)
