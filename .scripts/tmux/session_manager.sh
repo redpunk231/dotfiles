@@ -14,7 +14,7 @@ sessions_list() {
 
 session_new() {
     DIR=$((echo $HOME; find ~/.code -maxdepth 1 -type d) | \
-        fzf --tmux=25%,15% \
+        fzf --tmux=30%,20% \
             --info=hidden \
             --prompt='work path: ' \
             --border-label='Create session' \

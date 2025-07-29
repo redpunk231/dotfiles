@@ -10,10 +10,18 @@ fi
 
 SESSIONS=($(tmux list-sessions -F '#S'))
 if [ ${#SESSIONS[@]} -eq 0 ]; then
-    tmux new -d -s main
+    tmux -2 new -d -s main
 fi
 
 # gnome-terminal --maximize -- /home/redpunk/.scripts/run_tmux.sh
+# alacritty \
+#     -o 'window.decorations="none"' \
+#     -o 'window.startup_mode="Maximized"' \
+#     -t tmux & \
+#     -e tmux -2 attach -t main &
+# echo $! > $PID
+
+
 alacritty \
     -o 'window.decorations="none"' \
     -o 'window.startup_mode="Maximized"' \
