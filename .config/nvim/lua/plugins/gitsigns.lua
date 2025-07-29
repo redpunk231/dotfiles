@@ -11,7 +11,7 @@ return {
             --     delete = { text = "󰍵" },
             --     changedelete = { text = "󱕖" },
             -- },
-            signs_staged_enable = false;
+            signs_staged_enable = false,
 
             on_attach = function(bufnr)
                 local gitsigns = require('gitsigns')
