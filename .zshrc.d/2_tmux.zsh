@@ -21,3 +21,4 @@ function tmux_session_there() {
 }
 
 alias tst='tmux_session_there'
+alias tm='tmux new -s main || tmux -2 attach'
