@@ -39,3 +39,6 @@ function mkpypkg() {
     mkdir ./$1
     touch ./$1/__init__.py
 }
+
+alias ysp='docker compose -f ~/.code/docker-compose.yml --profile'
+alias ys='docker compose -f ~/.code/docker-compose.yml'

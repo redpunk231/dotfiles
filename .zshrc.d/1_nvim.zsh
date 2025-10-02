@@ -1,7 +1,7 @@
 DIR_UPDATE_TMP="$HOME/.nvim_releases"
 DIR_OPT='/opt'
 DIR_OPT_NVIM="$DIR_OPT/nvim-linux-x86_64"
-URL_DISTRIB='https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz'
+URL_DISTRIB='https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz'
 FILE_DISTRIB='nvim.tar.gz'
 
 function nvim_upgrade() {
