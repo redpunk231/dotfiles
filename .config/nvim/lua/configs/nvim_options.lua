@@ -57,3 +57,35 @@ local is_windows = vim.fn.has "win32" ~= 0
 local sep = is_windows and "\\" or "/"
 local delim = is_windows and ";" or ":"
 vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
+
+vim.diagnostic.config({
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = '',
+            [vim.diagnostic.severity.WARN] = '',
+            [vim.diagnostic.severity.INFO] = '',
+            [vim.diagnostic.severity.HINT] = '',
+        }
+    },
+    underline = true,
+    severity_sort = true,
+    virtual_text = false,
+    virtual_lines = false,
+})
+vim.lsp.config('*', {
+    on_attach = function(client, bufnr)
+        local telescope = require("telescope.builtin")
+        local function opts(desc)
+            return { buffer = bufnr, desc = "LSP " .. desc, noremap=true, silent=true }
+        end
+
+        vim.keymap.set("n", "gr", telescope.lsp_references)
+        vim.keymap.set("n", "gd", telescope.lsp_definitions)
+        vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename)
+
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
+        vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
+
+    end,
+})
+vim.lsp.enable('pyright')
