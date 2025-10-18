@@ -7,11 +7,11 @@ return {
         return  {
             ensure_installed = {
                 "python",
-                -- "bash",
-                "comment",
+                "bash",
+                -- "comment",
                 -- "css",
                 -- "sql",
-                -- "tmux",
+                "tmux",
                 "vim",
                 "vimdoc",
                 -- "xml",
@@ -19,14 +19,15 @@ return {
                 -- "todotxt",
                 -- "toml",
                 -- "csv",
-                -- "diff",
+                "diff",
                 "dockerfile",
-                -- "gitcommit",
-                -- "gitignore",
+                "gitcommit",
+                "gitignore",
                 -- "javascript",
-                -- "lua",
-                -- "markdown",
-                -- "regex"
+                "lua",
+                "markdown",
+                "markdown_inline",
+                "regex"
             },
             sync_install = false,
             highlight = {

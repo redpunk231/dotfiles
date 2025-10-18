@@ -111,6 +111,12 @@ return {
                             newfile = '',
                         },
                     },
+                    {
+                        function()
+                            return "·" .. require("noice").api.statusline.mode.get() .. "·"
+                        end,
+                        cond = require("noice").api.statusline.mode.has,
+                    }
                 },
                 lualine_x = {
                     {
