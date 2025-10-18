@@ -1,10 +1,5 @@
+GIT_HOOKS_PATH="$HOME/.githooks"
 TMP_PROJECTS_PATH="$HOME/.code_tmp"
-
-function project() {
-    # python_env || return 1
-    tmux_rename_window 'code'
-    nvim
-}
 
 compdef _tmp_project tmp_project
 _tmp_project() { compadd $(find $TMP_PROJECTS_PATH -maxdepth 1 -mindepth 1 -type d -printf "%f\n")}
@@ -33,8 +28,6 @@ function tmp_project() {
     cd $SAVE_PATH
 }
 
-alias pr='project'
-
 function mkpypkg() {
     mkdir ./$1
     touch ./$1/__init__.py
@@ -42,3 +35,5 @@ function mkpypkg() {
 
 alias ysp='docker compose -f ~/.code/docker-compose.yml --profile'
 alias ys='docker compose -f ~/.code/docker-compose.yml'
+
+alias install_git_hooks="$HOME/.githooks/install.py"

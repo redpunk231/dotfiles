@@ -1,3 +1,4 @@
+# Settings for "oh-my-zsh" framework
 export ZSH="/$HOME/.oh-my-zsh"
 ZSH_THEME="simple"
 plugins=(
@@ -6,30 +7,16 @@ plugins=(
     docker-compose
     fzf
     uv
+    kitty
 )
-
 source $ZSH/oh-my-zsh.sh
-source ~/.profile_env
-for src in ~/.zshrc.d/*; do
-    source "$src"
-done
 
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
-PROMPT="$PROMPT› "
 
-
-[ -f ~/.fzf.zsh ] && source $HOME/.fzf.zsh
-eval "$(zoxide init zsh)"
-[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
-
-function update-dotfiles() {
-    if [ "$(pwd)" != "$HOME/.dotfiles" ]; then
-        echo 'current path is not path with dotfiles...'
-        return 1
-    fi
-
-    stow -Rv .
-}
+# load zshrc configs
+for src in ~/.zshrc.d/*; do
+    source "$src"
+done
