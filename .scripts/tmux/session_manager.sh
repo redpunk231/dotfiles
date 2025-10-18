@@ -3,7 +3,7 @@ source ~/.profile_env
 [[ -z "$TMUX" ]] && exit 1
 
 SELF=$(realpath $0)
-FZF_NAMING_OPTS='--info=hidden --no-separator --tmux=25%,5% --print-query'
+FZF_NAMING_OPTS='--info=hidden --no-separator --tmux=50,3 --print-query'
 
 
 sessions_list() {
@@ -81,7 +81,7 @@ window_popup() {
         sed 's/^1://g'\
     )
     tmux display-popup \
-        -h 30% -w 50% \
+        -h 30% -w 70% \
         -b rounded \
         -d $PWD \
         -S fg=colour241 \
