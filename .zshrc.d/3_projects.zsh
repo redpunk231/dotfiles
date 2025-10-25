@@ -15,16 +15,12 @@ function tmp_project() {
         uv venv venv
         touch main.py
         touch requirements.txt
+        source venv/bin/activate
     fi
 
     echo $(date +'%Y-%m-%d %H:%M:%S') > .last_used
-
-    python_env || return 1
     tmux_rename_window "$1 ♲"
-
     nvim main.py
-
-    deactivate
     cd $SAVE_PATH
 }
 
