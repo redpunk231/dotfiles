@@ -13,6 +13,7 @@ import pathlib
 import re
 import subprocess
 import sys
+import typing
 
 from dotenv import load_dotenv
 
@@ -64,7 +65,7 @@ class JIRATicketHook(ProtoPrepareMessageHook):
         branch = subprocess.check_output(["git", "symbolic-ref", "--short", "HEAD"])
         return branch.decode("utf-8").strip()
 
-    def _get_jira_ticket(self, branch: str) -> str | None:
+    def _get_jira_ticket(self, branch: str) -> typing.Optional[str]:
         ticket_match = re.match(self.regex_tiket, branch)
         if ticket_match is None:
             return None
