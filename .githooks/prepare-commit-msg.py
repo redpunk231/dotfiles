@@ -43,7 +43,7 @@ class ProtoPrepareMessageHook(abc.ABC):
 
 
 class JIRATicketHook(ProtoPrepareMessageHook):
-    regex_tiket = r'^[A-Z]{1,}-[0-9]{1,}'
+    regex_tiket = r'^[a-z/]*([A-Z]{1,}-[0-9]{1,})'
 
     @property
     def _is_enabled(self) -> bool:
@@ -66,10 +66,9 @@ class JIRATicketHook(ProtoPrepareMessageHook):
         return branch.decode("utf-8").strip()
 
     def _get_jira_ticket(self, branch: str) -> typing.Optional[str]:
-        ticket_match = re.match(self.regex_tiket, branch)
-        if ticket_match is None:
-            return None
-        return ticket_match.group(0)
+        if ticket := re.search(self.regex_tiket, branch):
+            return ticket.group(1)
+        return None
 
     def _check_containt_ticket(self, ticket: str, message: str) -> bool:
         return any(
