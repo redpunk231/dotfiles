@@ -88,4 +88,3 @@ vim.lsp.config('*', {
 
     end,
 })
-vim.lsp.enable('pyright')

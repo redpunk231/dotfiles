@@ -9,6 +9,7 @@ require("lazy").setup(
     { require("configs.theme"), { import = "plugins" } },
     require("configs.lazy")
 )
+require("configs.nvim_lsp")
 require("configs.nvim_options")
 require("configs.nvim_autocmds")
 require("configs.nvim_user_commands")
