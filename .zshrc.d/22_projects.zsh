@@ -11,12 +11,19 @@ function tmp_project() {
     mkdir -p $PROJECT_PATH
     cd $PROJECT_PATH
 
-    if [ ! -d "$PROJECT_PATH/venv" ]; then
-        uv venv venv
+    if [ -z "$VIRTUAL_ENV" ]; then
+        uv init --bare --vcs=none --no-readme --name='temp_project' .
+        uv venv --managed-python
+        source .venv/bin/activate
         touch main.py
-        touch requirements.txt
-        source venv/bin/activate
     fi
+
+    # if [ ! -d "$PROJECT_PATH/venv" ]; then
+    #     uv venv venv
+    #     touch main.py
+    #     touch requirements.txt
+    #     source venv/bin/activate
+    # fi
 
     echo $(date +'%Y-%m-%d %H:%M:%S') > .last_used
     tmux_rename_window "$1 ♲"
