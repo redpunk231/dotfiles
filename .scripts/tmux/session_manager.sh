@@ -3,6 +3,7 @@ source ~/.profile_env
 [[ -z "$TMUX" ]] && exit 1
 
 SELF=$(realpath $0)
+FZF_THREME_OPTS='--color 16'
 FZF_NAMING_OPTS='--info=hidden --no-separator --tmux=50,3 --print-query'
 
 
@@ -14,7 +15,8 @@ sessions_list() {
 
 session_new() {
     DIR=$((echo $HOME; find ~/.code -maxdepth 1 -type d) | \
-        fzf --tmux=30%,20% \
+        fzf $FZF_THREME_OPTS \
+            --tmux=30%,20% \
             --info=hidden \
             --prompt='work path: ' \
             --border-label='Create session' \
@@ -27,7 +29,8 @@ session_new() {
         sessions_list | grep '^main$' > /dev/null
         if [ $? -eq 0 ]; then
             SESSION_NAME=$(echo '' | \
-                fzf $FZF_NAMING_OPTS \
+                fzf $FZF_THREME_OPTS \
+                    $FZF_NAMING_OPTS \
                     --prompt='name: '\
                     --border-label='Create session' \
                     --query="$1" \
@@ -49,7 +52,8 @@ session_rename() {
 
 
     NAME=$(echo '' | \
-        fzf $FZF_NAMING_OPTS \
+        fzf $FZF_THREME_OPTS \
+            $FZF_NAMING_OPTS \
             --prompt='rename session: '\
             --query="$1"
     )
@@ -63,7 +67,9 @@ session_rename() {
 window_rename() {
     CUR_NAME="$(tmux display-message -p '#W' | grep -v '^\(zsh\|nvim\|less\)$')"
     NAME=$(\
-        echo '' | fzf $FZF_NAMING_OPTS \
+        echo '' | fzf \
+            $FZF_THREME_OPTS \
+            $FZF_NAMING_OPTS \
             --prompt='rename window: ' \
             -q "$CUR_NAME" \
     )
@@ -94,8 +100,9 @@ main() {
     FZF_RESULT=$(\
         $FZF_DEFAULT_COMMAND | \
         fzf \
+            $FZF_THREME_OPTS \
             --cycle \
-            --tmux=15%,15% \
+            --tmux=20%,20% \
             --info=hidden \
             --border-label='Sessions' \
             --bind "alt-d:execute-silent(tmux kill-session -t {})+reload($FZF_DEFAULT_COMMAND)" \
