@@ -36,3 +36,22 @@ fi
 if [ -f $HOME/.cargo/env ]; then
     source $HOME/.cargo/env
 fi
+
+
+compdef _term-theme term-theme
+_term-theme() { compadd 'dark' 'light'}
+
+function term-theme() {
+    THEME_NAME=''
+    case "$1" in
+        dark)
+            THEME_NAME='Redpunk Dark'
+        ;;
+        light)
+            THEME_NAME='Redpunk Light'
+        ;;
+    esac
+    kitty +kitten themes --config-file-name kitty_local.conf --reload-in=all "$THEME_NAME"
+
+
+}

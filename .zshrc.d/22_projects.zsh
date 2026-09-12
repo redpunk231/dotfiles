@@ -13,7 +13,7 @@ function tmp_project() {
 
     if [ -z "$VIRTUAL_ENV" ]; then
         uv init --bare --vcs=none --no-readme --name='temp_project' .
-        uv venv --managed-python
+        uv venv
         source .venv/bin/activate
         touch main.py
     fi
